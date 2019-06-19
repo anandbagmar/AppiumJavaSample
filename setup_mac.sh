@@ -32,6 +32,7 @@ brewCaskInstall java8
 brewInstall node
 brewInstall coreutils
 brewInstall wget
+brewInstall cmake
 brewInstall carthage
 brewInstall ruby
 brewInstall ffmpeg
@@ -64,10 +65,23 @@ pwd
 sleep 5
 echo "Done installing android sdk"
 
+if ! [ -d "$ANDROID_HOME/bundle-tool" ] ; then
+    echo "Setup bundletool"
+    cd $ANDROID_HOME
+    mkdir -pv bundle-tool
+    cd bundle-tool
+    wget https://github.com/google/bundletool/releases/download/0.9.0/bundletool-all-0.9.0.jar -O bundletool.jar
+    chmod +x bundletool.jar
+else
+    echo "$ANDROID_HOME/bundle-tool already setup"
+fi
+
 cd $CURRENT_DIR
 pwd
 echo "Install flick ruby gem"
 sudo gem install flick
+echo "Install opencv4nodejs"
+npm install -g opencv4nodejs
 echo "Installed node version"
 node -v
 echo "Install ios-deploy"
@@ -84,5 +98,5 @@ appium-doctor
 echo "PLEASE ENSURE"
 echo "-- ANDROID_HOME is set to $ANDROID_HOME"
 echo "-- Update PATH:"
-echo "---- 'export PATH=\$PATH:\$ANDROID_HOME/platform-tools:\$ANDROID_HOME/tools'"
+echo "---- 'export PATH=\$PATH:\$ANDROID_HOME/platform-tools:\$ANDROID_HOME/tools:\$ANDROID_HOME/bundle-tool'"
 pwd
