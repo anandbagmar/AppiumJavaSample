@@ -30,6 +30,7 @@ echo "ANDROID_HOME - " $ANDROID_HOME
 brew tap caskroom/versions
 brewCaskInstall java8
 brewInstall node
+brewInstall coreutils
 brewInstall wget
 brewInstall carthage
 brewInstall ruby
