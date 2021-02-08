@@ -27,7 +27,7 @@ if ! [ -d "$ANDROID_HOME" ] ; then
     sudo chmod 777 $ANDROID_HOME
     echo "Downloading android sdk"
     rm -f $DOWNLOADED_ZIP 2> /dev/null
-    wget https://dl.google.com/android/repository/sdk-tools-darwin-4333796.zip -O $DOWNLOADED_ZIP
+    wget https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip -O $DOWNLOADED_ZIP
     unzip $DOWNLOADED_ZIP -d $ANDROID_HOME
     sleep 5
 else
@@ -65,10 +65,10 @@ npm install -g --save opencv4nodejs
 echo "Install mjpeg-consumer"
 npm install -g mjpeg-consumer
 echo "Install node modules - appium"
-npm install -g appium@1.13.0
+npm install -g appium
 sleep 5
 echo "Install node modules - appium-doctor"
-npm install -g appium-doctor@1.10.0
+npm install -g appium-doctor
 sleep 5
 echo "Run appium-doctor"
 appium-doctor

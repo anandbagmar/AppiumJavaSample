@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -e
 
-
 function brewCaskInstall () {
 echo "Installing $1"
     if brew ls --versions $1 > /dev/null; then
@@ -47,7 +46,7 @@ if ! [ -d "$ANDROID_HOME" ] ; then
     sudo chmod 777 $ANDROID_HOME
     echo "Downloading android sdk"
     rm -f $DOWNLOADED_ZIP 2> /dev/null
-    wget https://dl.google.com/android/repository/sdk-tools-darwin-4333796.zip -O $DOWNLOADED_ZIP
+    wget https://dl.google.com/android/repository/commandlinetools-mac-6858069_latest.zip -O $DOWNLOADED_ZIP
     unzip $DOWNLOADED_ZIP -d $ANDROID_HOME
     sleep 5
 else
@@ -87,10 +86,10 @@ node -v
 echo "Install ios-deploy"
 npm install -g ios-deploy
 echo "Install node modules - appium"
-npm install -g appium@1.13.0
+npm install -g appium
 sleep 5
 echo "Install node modules - appium-doctor"
-npm install -g appium-doctor@1.10.0
+npm install -g appium-doctor
 sleep 5
 echo "Run appium-doctor"
 appium-doctor
