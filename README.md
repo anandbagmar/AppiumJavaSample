@@ -16,6 +16,7 @@ Sample project for running tests using Java/TestNG/Appium
 ### Prerequisites:
 * Start appium server manually (and update the url/port if not using the default)
 * Have devices connected / emulators started. Accordingly, update the (.*Test.java) test file with the relevant information about the devices
+* The device should have the Calculator app
 
 ### Tests
 This project includes the following tests implemented for Android devices:
