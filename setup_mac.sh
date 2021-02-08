@@ -27,7 +27,7 @@ echo "JAVA_HOME - " $JAVA_HOME
 echo "ANDROID_HOME - " $ANDROID_HOME
 
 brew tap caskroom/versions
-brewCaskInstall java8
+brewCaskInstall adoptopenjdk8
 brewInstall node
 brewInstall coreutils
 brewInstall wget
