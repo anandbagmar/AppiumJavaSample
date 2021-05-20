@@ -60,7 +60,6 @@ pwd
 echo "Installing ./sdkmanager tools platform-tools platforms;android-28 build-tools;28.0.3"
 pwd
 touch ~/.android/repositories.cfg
-./sdkmanager "tools" "platform-tools" "platforms;android-28" "build-tools;28.0.3" "info_back"
 ./sdkmanager "tools" "platform-tools" "platforms;android-28" "build-tools;28.0.3"
 
 sleep 5
