@@ -27,7 +27,7 @@ if ! [ -d "$ANDROID_HOME" ] ; then
     sudo chmod 777 $ANDROID_HOME
     echo "Downloading android sdk"
     rm -f $DOWNLOADED_ZIP 2> /dev/null
-    wget https://dl.google.com/android/repository/commandlinetools-linux-6858069_latest.zip -O $DOWNLOADED_ZIP
+    wget https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip -O $DOWNLOADED_ZIP
     unzip $DOWNLOADED_ZIP -d $ANDROID_HOME
     sleep 5
 else
@@ -38,10 +38,10 @@ echo "Setup android sdk"
 cd $ANDROID_HOME/tools/bin
 pwd
 
-echo "Installing ./sdkmanager tools platform-tools platforms;android-28 build-tools;28.0.3"
+echo "Installing ./sdkmanager tools platform-tools platforms;android-31 build-tools;31.0.0"
 pwd
 touch ~/.android/repositories.cfg
-./sdkmanager "tools" "platform-tools" "platforms;android-28" "build-tools;28.0.3"
+./sdkmanager "tools" "platform-tools" "platforms;android-31" "build-tools;31.0.0"
 
 sleep 5
 echo "Done installing android sdk"
@@ -77,5 +77,5 @@ appium-doctor
 echo "PLEASE ENSURE"
 echo "-- ANDROID_HOME is set to $ANDROID_HOME"
 echo "-- Update PATH:"
-echo "---- 'export PATH=\$PATH:\$ANDROID_HOME/platform-tools:\$ANDROID_HOME/tools:\$ANDROID_HOME/bundle-tool'"
+echo "---- 'export PATH=\$PATH:\$ANDROID_HOME/platform-tools:\$ANDROID_HOME/tools:\$ANDROID_HOME/tools/bin:\$ANDROID_HOME/bundle-tool'"
 pwd
