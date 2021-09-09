@@ -20,6 +20,7 @@ Sample project for running tests using Java/TestNG/Appium
 
 ### Tests
 This project includes the following tests implemented for Android devices:
-* [CalcTest.java](src/test/java/com/eot/sample/CalcTest.java) - run an Appium test against the Calculator app
+* [MessagesTest.java](src/test/java/com/eot/sample/MessagesTest.java) - run an Appium test against the Messages app
 * [ParallelCalcTest.java](src/test/java/com/eot/sample/ParallelCalcTest.java) - run 2 Appium tests, in parallel, using testng
+* [AppiumWebTest.java](src/test/java/com/eot/sample/AppiumWebTest.java) - runs an appium test against a Chrome browser (mobile-web) in the connected device
  
