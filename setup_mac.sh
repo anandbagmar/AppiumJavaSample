@@ -1,21 +1,45 @@
 #!/usr/bin/env bash
 set -e
 
+arch_name="$(uname -m)"
+
+if [ "${arch_name}" = "x86_64" ]; then
+    if [ "$(sysctl -in sysctl.proc_translated)" = "1" ]; then
+        echo "Running on Rosetta 2"
+    else
+        echo "Running on native Intel"
+    fi
+elif [ "${arch_name}" = "arm64" ]; then
+    echo "Running on ARM"
+else
+    echo "Unknown architecture: ${arch_name}"
+fi
+
 function brewCaskInstall () {
 echo "Installing $1"
+echo "On platform: $arch_name"
     if brew ls --versions $1 > /dev/null; then
             echo "- $1 already installed"
     else
-            brew cask install $1
+        if [ "${arch_name}" = "arm64" ]; then
+            arch -x86_64 brew install --cask $1
+        else
+            brew install --cask $1
+        fi
     fi
 }
 
 function brewInstall () {
 echo "Installing $1"
+echo "On platform: $arch_name"
     if brew ls --versions $1 > /dev/null; then
             echo "- $1 already installed"
     else
+        if [ "${arch_name}" = "arm64" ]; then
+            arch -x86_64 brew install $1
+        else
             brew install $1
+        fi
     fi
 }
 
@@ -25,9 +49,11 @@ echo "CURRENT_DIR - " $CURRENT_DIR
 [ -z "$ANDROID_HOME" ] && echo "ANDROID_HOME is NOT SET AS AN ENVIRONMENT VARIABLE. Set it first then rerun the script" && exit 1;
 echo "JAVA_HOME - " $JAVA_HOME
 echo "ANDROID_HOME - " $ANDROID_HOME
+echo "On platform: $arch_name"
 
-brew tap caskroom/versions
-brewCaskInstall adoptopenjdk8
+brew tap homebrew/cask-versions
+brew tap AdoptOpenJDK/openjdkbrew
+brewCaskInstall  adoptopenjdk/openjdk/adoptopenjdk8
 brewInstall node
 brewInstall coreutils
 brewInstall wget
@@ -37,6 +63,15 @@ brewInstall ruby
 brewInstall ffmpeg
 brewInstall mp4box
 brewInstall ideviceinstaller
+brewInstall lyft/formulae/set-simulator-location
+brew tap wix/brew
+brewInstall applesimutils
+brewInstall gstreamer
+brewInstall gst-plugins-base
+brewInstall gst-plugins-good
+brewInstall gst-plugins-bad
+brewInstall gst-plugins-ugly
+brewInstall gst-libav
 
 if ! [ -d "$ANDROID_HOME" ] ; then
     mkdir -pv ./temp
@@ -46,7 +81,7 @@ if ! [ -d "$ANDROID_HOME" ] ; then
     sudo chmod 777 $ANDROID_HOME
     echo "Downloading android sdk"
     rm -f $DOWNLOADED_ZIP 2> /dev/null
-    wget https://dl.google.com/android/repository/commandlinetools-mac-6858069_latest.zip -O $DOWNLOADED_ZIP
+    wget https://dl.google.com/android/repository/commandlinetools-mac-7583922_latest.zip -O $DOWNLOADED_ZIP
     unzip $DOWNLOADED_ZIP -d $ANDROID_HOME
     sleep 5
 else
@@ -54,23 +89,22 @@ else
 fi
 
 echo "Setup android sdk"
-cd $ANDROID_HOME/tools/bin
+cd $ANDROID_HOME/cmdline-tools/bin
 pwd
 
-echo "Installing ./sdkmanager tools platform-tools platforms;android-28 build-tools;28.0.3"
+echo "Installing ./sdkmanager --sdk_root=$ANDROID_HOME tools platform-tools platforms;android-31 build-tools;31.0.0 emulator"
 pwd
-touch ~/.android/repositories.cfg
-./sdkmanager "tools" "platform-tools" "platforms;android-28" "build-tools;28.0.3"
+./sdkmanager --sdk_root=$ANDROID_HOME "tools" "platform-tools" "platforms;android-31" "build-tools;31.0.0" "emulator"
 
 sleep 5
-echo "Done installing android sdk"
+echo "Done installing Android SDK in $ANDROID_HOME"
 
 if ! [ -d "$ANDROID_HOME/bundle-tool" ] ; then
     echo "Setup bundletool"
     cd $ANDROID_HOME
     mkdir -pv bundle-tool
     cd bundle-tool
-    wget https://github.com/google/bundletool/releases/download/0.9.0/bundletool-all-0.9.0.jar -O bundletool.jar
+    wget https://github.com/google/bundletool/releases/download/1.8.0/bundletool-all-1.8.0.jar -O bundletool.jar
     chmod +x bundletool.jar
 else
     echo "$ANDROID_HOME/bundle-tool already setup"
@@ -80,8 +114,8 @@ cd $CURRENT_DIR
 pwd
 echo "Install flick ruby gem"
 sudo gem install flick
-echo "Install opencv4nodejs"
-npm install -g opencv4nodejs
+# echo "Install opencv4nodejs"
+# npm install -g opencv4nodejs
 echo "Installed node version"
 node -v
 echo "Install ios-deploy"
@@ -98,5 +132,5 @@ appium-doctor
 echo "PLEASE ENSURE"
 echo "-- ANDROID_HOME is set to $ANDROID_HOME"
 echo "-- Update PATH:"
-echo "---- 'export PATH=\$PATH:\$ANDROID_HOME/platform-tools:\$ANDROID_HOME/tools:\$ANDROID_HOME/bundle-tool'"
+echo "---- 'export PATH=\$PATH:\$ANDROID_HOME/platform-tools:\$ANDROID_HOME/tools:\$ANDROID_HOME/tools/bin:\$ANDROID_HOME/bundle-tool'"
 pwd
