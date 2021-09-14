@@ -30,11 +30,9 @@ public class Appium_Web_iOS_HelloWorld {
     }
 
     @Test
-    public void runIOSNativeAppTest() {
-        driver.findElementByAccessibilityId("Make the number below random.").click();
-        driver.findElementByAccessibilityId("MakeRandomNumberCheckbox").click();
-        driver.findElementByAccessibilityId("SimulateDiffsCheckbox").click();
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Click me!\"]").click();
+    public void runIOSNativeAppTest() throws InterruptedException {
+        driver.get("https://google.com");
+        Thread.sleep(10000);
     }
 
     private static AppiumDriver<WebElement> createAppiumDriver() {
@@ -44,7 +42,8 @@ public class Appium_Web_iOS_HelloWorld {
         dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, PLATFORM_VERSION);
         dc.setCapability(MobileCapabilityType.DEVICE_NAME, DEVICE_NAME);
         dc.setCapability(MobileCapabilityType.UDID, UDID);
-        dc.setCapability("app", System.getProperty("user.dir") + "/src/test/resources/sampleApps/eyes-ios-hello-world.zip");
+        dc.setCapability(MobileCapabilityType.BROWSER_NAME, "safari");
+        dc.setCapability(MobileCapabilityType.APP, "io.appium.SafariLauncher");
 
         AppiumDriver<WebElement> driver = null;
         try {
