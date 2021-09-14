@@ -36,6 +36,7 @@ public class AppiumWebTest {
         dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
         dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, "12");
         dc.setCapability(MobileCapabilityType.DEVICE_NAME, "Android");
+        dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
         dc.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
         dc.setCapability("chromedriverExecutable", System.getProperty("webdriver.chrome.driver"));
 
