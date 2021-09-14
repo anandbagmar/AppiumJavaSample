@@ -10,7 +10,7 @@ import org.testng.annotations.*;
 import java.lang.reflect.*;
 import java.net.*;
 
-public class Appium_Web_iOS_HelloWorld {
+public class Appium_Web_iOS_HelloWorldTest {
     private static final String UDID = "F2D71DA6-ABD3-4311-A694-349FD64A5E7D";
     private static final String DEVICE_NAME = "iPhone 12 Pro Max";
     private static final String PLATFORM_VERSION = "14.5";

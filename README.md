@@ -19,8 +19,14 @@ Sample project for running tests using Java/TestNG/Appium
 * The device should have the Calculator app
 
 ### Tests
-This project includes the following tests implemented for Android devices:
-* [MessagesTest.java](src/test/java/com/eot/sample/MessagesTest.java) - run an Appium test against the Messages app
-* [ParallelCalcTest.java](src/test/java/com/eot/sample/ParallelCalcTest.java) - run 2 Appium tests, in parallel, using testng
-* [AppiumWebTest.java](src/test/java/com/eot/sample/AppiumWebTest.java) - runs an appium test against a Chrome browser (mobile-web) in the connected device
- 
+This project includes the following tests implemented for Android & iOS devices:
+
+#### Android
+* [Appium_Native_Android_MessagesTest.java](src/test/java/com/eot/sample/android/Appium_Native_Android_MessagesTest.java) - run an Appium test against the Messages app
+* [Appium_Native_Android_ParallelCalcTest.java](src/test/java/com/eot/sample/android/Appium_Native_Android_ParallelCalcTest.java) - run 2 Appium tests, in parallel, using testng
+* [Appium_Web_Android_HelloWorldTest.java](src/test/java/com/eot/sample/android/Appium_Web_Android_HelloWorldTest.java) - runs an appium test against a Chrome browser (mobile-web) in the connected device
+
+#### iOS
+* [Appium_Native_iOS_HelloWorldTest.java](src/test/java/com/eot/sample/iOS/Appium_Native_iOS_HelloWorldTest.java) - run an Appium test against the Messages app
+* [Appium_Web_iOS_HelloWorldTest.java](src/test/java/com/eot/sample/iOS/Appium_Web_iOS_HelloWorldTest.java) - run 2 Appium tests, in parallel, using testng
+
