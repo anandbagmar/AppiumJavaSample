@@ -63,6 +63,7 @@ brewInstall ruby
 brewInstall ffmpeg
 brewInstall mp4box
 brewInstall ideviceinstaller
+brewInstall libimobiledevice
 brewInstall lyft/formulae/set-simulator-location
 brew tap wix/brew
 brewInstall applesimutils
