@@ -1,4 +1,4 @@
-package com.eot.sample;
+package com.eot.sample.android;
 
 import io.appium.java_client.*;
 import io.appium.java_client.android.*;
@@ -34,7 +34,7 @@ public class MessagesTest {
     }
 
     @Test
-    public void runTest() {
+    public void runMessagesTest() {
         try {
             driver.findElementById("com.google.android.apps.messaging:id/conversation_list_google_tos_popup_positive_button").click();
             driver.findElementById("android:id/button2").click();

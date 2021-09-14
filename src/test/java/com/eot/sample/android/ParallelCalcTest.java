@@ -1,4 +1,4 @@
-package com.eot.sample;
+package com.eot.sample.android;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;

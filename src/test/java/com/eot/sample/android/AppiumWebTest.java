@@ -1,4 +1,4 @@
-package com.eot.sample;
+package com.eot.sample.android;
 
 import com.eot.utils.*;
 import io.appium.java_client.*;
