@@ -11,7 +11,7 @@ import java.lang.reflect.*;
 import java.net.*;
 import java.util.*;
 
-public class MessagesTest {
+public class Appium_Native_Android_MessagesTest {
 
     private AppiumDriver driver;
 

@@ -12,7 +12,7 @@ import java.net.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-public class AppiumWebTest {
+public class Appium_Web_Android_HelloWorldTest {
 
     @Test()
     public void appiumWebTest() throws InterruptedException {

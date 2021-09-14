@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 
-public class ParallelCalcTest {
+public class Appium_Native_Android_ParallelCalcTest {
 
     private final static String APPIUM_SERVER_URL = "http://localhost:port/wd/hub";
     private HashMap<String, AppiumDriver<MobileElement>> drivers = new HashMap<>();
