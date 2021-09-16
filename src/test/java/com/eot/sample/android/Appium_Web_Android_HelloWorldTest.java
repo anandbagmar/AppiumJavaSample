@@ -6,19 +6,35 @@ import io.appium.java_client.remote.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.*;
 import org.openqa.selenium.remote.*;
+import org.testng.*;
 import org.testng.annotations.*;
 
+import java.lang.reflect.*;
 import java.net.*;
 import java.util.*;
 import java.util.concurrent.*;
 
 public class Appium_Web_Android_HelloWorldTest {
+    private AppiumDriver driver;
+
+    @BeforeMethod
+    public void beforeMethod(Method method) {
+        DriverUtils.setChromeDriverForConnectedDevice();
+        driver = setupMobileWeb();
+    }
+
+    @AfterMethod
+    public void afterMethod(ITestResult result) {
+        if (null != driver) {
+            System.out.println("Close the driver");
+            driver.quit();
+        }
+    }
+
 
     @Test()
     public void appiumWebTest() throws InterruptedException {
         System.out.println("Start time: " + new Date().toString());
-        DriverUtils.setChromeDriverForConnectedDevice();
-        AppiumDriver driver = setupMobileWeb();
         driver.get("https://applitools.com/helloworld");
         for (int stepNumber = 0; stepNumber < 5; stepNumber++) {
             driver.findElement(By.linkText("?diff1")).click();
@@ -26,8 +42,6 @@ public class Appium_Web_Android_HelloWorldTest {
         }
 
         driver.findElement(By.tagName("button")).click();
-        driver.quit();
-
         System.out.println("End time: " + new Date().toString());
     }
 

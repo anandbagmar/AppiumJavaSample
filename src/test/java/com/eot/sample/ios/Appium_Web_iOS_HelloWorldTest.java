@@ -9,6 +9,7 @@ import org.testng.annotations.*;
 
 import java.lang.reflect.*;
 import java.net.*;
+import java.util.*;
 
 public class Appium_Web_iOS_HelloWorldTest {
     private static final String UDID = "F2D71DA6-ABD3-4311-A694-349FD64A5E7D";
@@ -30,10 +31,21 @@ public class Appium_Web_iOS_HelloWorldTest {
     }
 
     @Test
-    public void runIOSNativeAppTest() throws InterruptedException {
-        driver.get("https://google.com");
-        Thread.sleep(10000);
+    public void runIOSWebTest() throws InterruptedException {
+        System.out.println("Start time: " + new Date().toString());
+        Thread.sleep(3000);
+        driver.get("https://applitools.com/helloworld");
+        for (int stepNumber = 0; stepNumber < 5; stepNumber++) {
+            driver.findElement(By.linkText("?diff1")).click();
+            Thread.sleep(1000);
+        }
+
+        driver.findElement(By.tagName("button")).click();
+        driver.quit();
+
+        System.out.println("End time: " + new Date().toString());
     }
+
 
     private static AppiumDriver<WebElement> createAppiumDriver() {
         DesiredCapabilities dc = new DesiredCapabilities();
