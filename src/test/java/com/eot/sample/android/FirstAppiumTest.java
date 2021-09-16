@@ -14,6 +14,8 @@ public class FirstAppiumTest {
     public void runMessagesTest() {
         String APPIUM_SERVER_URL = "http://localhost:4723/wd/hub";
         try {
+            // 1. Create a AppiumDriver
+            // 1.1 Set the capabilities of the driver
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
             capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android");
@@ -29,6 +31,8 @@ public class FirstAppiumTest {
             e.printStackTrace();
             throw new RuntimeException("Error in creating Appium Driver");
         }
+
+        // 2. Orchestrate the test scenario
         try {
             driver.findElementById("com.google.android.apps.messaging:id/conversation_list_google_tos_popup_positive_button").click();
             driver.findElementById("android:id/button2").click();
