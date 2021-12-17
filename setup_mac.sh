@@ -93,9 +93,9 @@ echo "Setup android sdk"
 cd $ANDROID_HOME/cmdline-tools/bin
 pwd
 
-echo "Installing ./sdkmanager --sdk_root=$ANDROID_HOME tools platform-tools platforms;android-31 build-tools;31.0.0 emulator"
+echo "Installing ./sdkmanager --sdk_root=$ANDROID_HOME tools cmdline-tools platform-tools platforms;android-31 build-tools;31.0.0 emulator"
 pwd
-./sdkmanager --sdk_root=$ANDROID_HOME "tools" "platform-tools" "platforms;android-31" "build-tools;31.0.0" "emulator"
+./sdkmanager --sdk_root=$ANDROID_HOME "tools" "cmdline-tools" "platform-tools" "platforms;android-31" "build-tools;31.0.0" "emulator"
 
 sleep 5
 echo "Done installing Android SDK in $ANDROID_HOME"
