@@ -44,10 +44,16 @@ echo "On platform: $arch_name"
 }
 
 CURRENT_DIR=`pwd`
-echo "CURRENT_DIR - " $CURRENT_DIR
-echo "JAVA_HOME - " $JAVA_HOME
-echo "ANDROID_HOME - " $ANDROID_HOME
+echo "============================================================"
+echo "Prerequisites: Install JDK and set JAVA_HOME environment variable. Also set ANDROID_HOME environment variable pointing to a directory where Android SDK should be installed"
+echo "============================================================"
+
+echo "CURRENT_DIR - $CURRENT_DIR"
+echo "JAVA_HOME - $JAVA_HOME"
+echo "ANDROID_HOME - $ANDROID_HOME"
 echo "On platform: $arch_name"
+echo "============================================================"
+
 [ -z "$JAVA_HOME" ] && echo "JAVA_HOME is NOT SET AS AN ENVIRONMENT VARIABLE. Set it first then rerun the script" && exit 1;
 [ -z "$ANDROID_HOME" ] && echo "ANDROID_HOME is NOT SET AS AN ENVIRONMENT VARIABLE. Set it first then rerun the script" && exit 1;
 
