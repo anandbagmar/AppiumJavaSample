@@ -43,7 +43,7 @@ echo "On platform: $arch_name"
     fi
 }
 
-CURRENT_DIR=`"pwd"`
+CURRENT_DIR=$("pwd")
 echo "============================================================"
 echo "Prerequisites: Install JDK and set JAVA_HOME environment variable. Also set ANDROID_HOME environment variable pointing to a directory where Android SDK should be installed"
 echo "============================================================"
@@ -114,7 +114,7 @@ fi
      echo "$ANDROID_HOME/bundle-tool already setup"
  fi
 
-cd $CURRENT_DIR
+cd "$CURRENT_DIR"
 pwd
 echo "Install flick ruby gem"
 sudo gem install flick
