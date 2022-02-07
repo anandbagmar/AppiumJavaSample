@@ -32,18 +32,18 @@ echo "On platform: $arch_name"
 function brewInstall () {
 echo "Installing $1"
 echo "On platform: $arch_name"
-    if brew ls --versions $1 > /dev/null; then
+    if brew ls --versions "$1" > /dev/null; then
             echo "- $1 already installed"
     else
         if [ "${arch_name}" = "arm64" ]; then
-            "arch -x86_64 brew install $1"
+            arch -x86_64 brew install "$1"
         else
-            "brew install $1"
+            brew install "$1"
         fi
     fi
 }
 
-CURRENT_DIR=`pwd`
+CURRENT_DIR=`"pwd"`
 echo "============================================================"
 echo "Prerequisites: Install JDK and set JAVA_HOME environment variable. Also set ANDROID_HOME environment variable pointing to a directory where Android SDK should be installed"
 echo "============================================================"
@@ -93,19 +93,19 @@ else
 fi
 
  echo "Setup android sdk"
- cd $ANDROID_HOME/cmdline-tools/bin
+ cd "$ANDROID_HOME/cmdline-tools/bin"
  pwd
 
  echo "Installing ./sdkmanager --sdk_root=$ANDROID_HOME tools cmdline-tools;latest emulator platform-tools platforms;android-32 platforms;android-32 build-tools;32.0.0"
  pwd
- ./sdkmanager --sdk_root=$ANDROID_HOME "tools" "cmdline-tools;latest" "emulator" "platform-tools" "platforms;android-32" "platforms;android-32" "build-tools;32.0.0"
+ ./sdkmanager --sdk_root="$ANDROID_HOME" "tools" "cmdline-tools;latest" "emulator" "platform-tools" "platforms;android-32" "platforms;android-32" "build-tools;32.0.0"
 
  sleep 5
  echo "Done installing Android SDK in $ANDROID_HOME"
 
  if ! [ -d "$ANDROID_HOME/bundle-tool" ] ; then
      echo "Setup bundletool"
-     cd $ANDROID_HOME
+     cd "$ANDROID_HOME"
      mkdir -pv bundle-tool
      cd bundle-tool
      wget https://github.com/google/bundletool/releases/download/1.8.0/bundletool-all-1.8.0.jar -O bundletool.jar
