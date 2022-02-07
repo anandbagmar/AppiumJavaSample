@@ -116,8 +116,8 @@ fi
 
 cd "$CURRENT_DIR"
 pwd
-echo "Install flick ruby gem"
-sudo gem install flick
+#echo "Install flick ruby gem"
+#sudo gem install flick
 # echo "Install opencv4nodejs"
 # npm install -g opencv4nodejs
 echo "Installed node version"
