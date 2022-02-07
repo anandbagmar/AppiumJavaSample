@@ -81,12 +81,12 @@ if ! [ -d "$ANDROID_HOME" ] ; then
     mkdir -pv ./temp
     DOWNLOADED_ZIP="./temp/tools.zip"
     echo "ANDROID_HOME ($ANDROID_HOME) directory NOT present. Setting it up now"
-    sudo mkdir -pv $ANDROID_HOME
-    sudo chmod 777 $ANDROID_HOME
+    sudo "mkdir -pv $ANDROID_HOME"
+    sudo "chmod 777 $ANDROID_HOME"
     echo "Downloading android sdk"
-    rm -f $DOWNLOADED_ZIP 2> /dev/null
+    "rm -f $DOWNLOADED_ZIP 2"> /dev/null
     wget https://dl.google.com/android/repository/commandlinetools-mac-8092744_latest.zip -O $DOWNLOADED_ZIP
-    unzip $DOWNLOADED_ZIP -d $ANDROID_HOME
+    "unzip $DOWNLOADED_ZIP -d $ANDROID_HOME"
     sleep 5
 else
     echo "ANDROID_HOME ($ANDROID_HOME) directory present. already set. IF YOU WANT TO REINSTALL, delete directory - $ANDROID_HOME and run the ./setup_mac.sh script again"
