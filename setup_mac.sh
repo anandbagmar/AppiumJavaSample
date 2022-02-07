@@ -18,13 +18,13 @@ fi
 function brewCaskInstall () {
 echo "Installing $1"
 echo "On platform: $arch_name"
-    if brew ls --versions $1 > /dev/null; then
+    if "brew ls --versions $1" > /dev/null; then
             echo "- $1 already installed"
     else
         if [ "${arch_name}" = "arm64" ]; then
-            arch -x86_64 brew install --cask $1
+            "arch -x86_64 brew install --cask $1"
         else
-            brew install --cask $1
+            "brew install --cask $1"
         fi
     fi
 }
@@ -36,9 +36,9 @@ echo "On platform: $arch_name"
             echo "- $1 already installed"
     else
         if [ "${arch_name}" = "arm64" ]; then
-            arch -x86_64 brew install $1
+            "arch -x86_64 brew install $1"
         else
-            brew install $1
+            "brew install $1"
         fi
     fi
 }
@@ -51,9 +51,6 @@ echo "On platform: $arch_name"
 [ -z "$JAVA_HOME" ] && echo "JAVA_HOME is NOT SET AS AN ENVIRONMENT VARIABLE. Set it first then rerun the script" && exit 1;
 [ -z "$ANDROID_HOME" ] && echo "ANDROID_HOME is NOT SET AS AN ENVIRONMENT VARIABLE. Set it first then rerun the script" && exit 1;
 
- brew tap caskroom/versions
- brew tap homebrew/cask-versions
- brew install --cask temurin11
  brewInstall node
  brewInstall coreutils
  brewInstall wget
