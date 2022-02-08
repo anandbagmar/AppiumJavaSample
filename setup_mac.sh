@@ -81,29 +81,29 @@ if ! [ -d "$ANDROID_HOME" ] ; then
     mkdir -pv ./temp
     DOWNLOADED_ZIP="./temp/tools.zip"
     echo "ANDROID_HOME ($ANDROID_HOME) directory NOT present. Setting it up now"
-    sudo "mkdir -pv $ANDROID_HOME"
-    sudo "chmod 777 $ANDROID_HOME"
+    sudo mkdir -pv "$ANDROID_HOME"
+    sudo chmod 777 "$ANDROID_HOME"
     echo "Downloading android sdk"
-    "rm -f $DOWNLOADED_ZIP 2"> /dev/null
-    wget https://dl.google.com/android/repository/commandlinetools-mac-8092744_latest.zip -O $DOWNLOADED_ZIP
-    "unzip $DOWNLOADED_ZIP -d $ANDROID_HOME"
+    rm -f "$DOWNLOADED_ZIP" 2> /dev/null
+    wget https://dl.google.com/android/repository/commandlinetools-mac-8092744_latest.zip -O "$DOWNLOADED_ZIP"
+    unzip $DOWNLOADED_ZIP -d "$ANDROID_HOME"
     sleep 5
 else
     echo "ANDROID_HOME ($ANDROID_HOME) directory present. already set. IF YOU WANT TO REINSTALL, delete directory - $ANDROID_HOME and run the ./setup_mac.sh script again"
 fi
 
  echo "Setup android sdk"
- cd "$ANDROID_HOME/cmdline-tools/bin"
+ cd "$ANDROID_HOME"/cmdline-tools/bin
  pwd
 
- echo "Installing ./sdkmanager --sdk_root=$ANDROID_HOME tools cmdline-tools;latest emulator platform-tools platforms;android-32 platforms;android-32 build-tools;32.0.0"
+ echo "Installing ./sdkmanager --sdk_root=$ANDROID_HOME tools cmdline-tools;latest platform-tools platforms;android-32 platforms;android-32 build-tools;32.0.0"
  pwd
- ./sdkmanager --sdk_root="$ANDROID_HOME" "tools" "cmdline-tools;latest" "emulator" "platform-tools" "platforms;android-32" "platforms;android-32" "build-tools;32.0.0"
+ ./sdkmanager --sdk_root="$ANDROID_HOME" "tools" "cmdline-tools;latest" "platform-tools" "platforms;android-32" "platforms;android-32" "build-tools;32.0.0"
 
  sleep 5
  echo "Done installing Android SDK in $ANDROID_HOME"
 
- if ! [ -d "$ANDROID_HOME/bundle-tool" ] ; then
+ if ! [ -d "$ANDROID_HOME"/bundle-tool ] ; then
      echo "Setup bundletool"
      cd "$ANDROID_HOME"
      mkdir -pv bundle-tool
@@ -116,8 +116,8 @@ fi
 
 cd "$CURRENT_DIR"
 pwd
-#echo "Install flick ruby gem"
-#sudo gem install flick
+# echo "Install flick ruby gem"
+# sudo gem install flick
 # echo "Install opencv4nodejs"
 # npm install -g opencv4nodejs
 echo "Installed node version"
