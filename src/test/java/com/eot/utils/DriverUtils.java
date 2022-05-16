@@ -108,6 +108,9 @@ public class DriverUtils {
             e.printStackTrace();
             throw new RuntimeException("Error getting list of devices" + e.getMessage());
         }
+        if (udids.size()==0) {
+            throw new RuntimeException("No devices connected");
+        }
         return udids;
     }
 

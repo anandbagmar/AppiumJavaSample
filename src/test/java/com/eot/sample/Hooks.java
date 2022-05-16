@@ -25,11 +25,13 @@ public class Hooks {
 
     @AfterSuite
     public void afterSuite() {
-        System.out.println(String.format("Stopping the local Appium server running on: '%s'",
-                                         localAppiumServer.getUrl()
-                                                          .toString()));
-        localAppiumServer.stop();
-        System.out.println("Is Appium server running? " + localAppiumServer.isRunning());
+        if (null != localAppiumServer) {
+            System.out.println(String.format("Stopping the local Appium server running on: '%s'",
+                                             localAppiumServer.getUrl()
+                                                              .toString()));
+            localAppiumServer.stop();
+            System.out.println("Is Appium server running? " + localAppiumServer.isRunning());
+        }
     }
 
     public URL getAppiumServerUrl() {
