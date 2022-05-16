@@ -1,28 +1,33 @@
 package com.eot.sample.android;
 
-import io.appium.java_client.*;
-import io.appium.java_client.android.*;
-import io.appium.java_client.remote.*;
-import org.openqa.selenium.remote.*;
-import org.testng.*;
-import org.testng.annotations.*;
+import com.eot.sample.Hooks;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.remote.AndroidMobileCapabilityType;
+import io.appium.java_client.remote.MobileCapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
-import java.lang.reflect.*;
-import java.net.*;
-import java.util.*;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.util.Date;
 
-public class Appium_Native_Android_MessagesTest {
+public class Appium_Native_Android_MessagesTest
+        extends Hooks {
 
     private AppiumDriver driver;
 
     @BeforeMethod
     public void beforeMethod(Method method) {
         String methodName = method.getName();
-        String appiumPort = "4723";
         String udid = "emulator-5554";
-        Integer systemPort = 8201;
-        log(String.format("Runnng test on %s, appiumPort - %s", udid, appiumPort));
-        driver = createAppiumDriver(appiumPort, udid);
+        log(String.format("Running test on '%s'",
+                          udid));
+        driver = createAppiumDriver(getAppiumServerUrl(),
+                                    udid);
     }
 
     @AfterMethod
@@ -36,15 +41,21 @@ public class Appium_Native_Android_MessagesTest {
     @Test
     public void runMessagesTest() {
         try {
-            driver.findElementById("com.google.android.apps.messaging:id/conversation_list_google_tos_popup_positive_button").click();
-            driver.findElementById("android:id/button2").click();
-            driver.findElementById("android:id/button1").click();
+            driver.findElementById("com.google.android.apps.messaging:id/conversation_list_google_tos_popup_positive_button")
+                  .click();
+            driver.findElementById("android:id/button2")
+                  .click();
+            driver.findElementById("android:id/button1")
+                  .click();
         } catch (Exception e) {
             System.out.println("Agree button not seen");
         }
-        driver.findElementByAccessibilityId("Start chat").click();
-        driver.findElementByAccessibilityId("Switch between entering text and numbers").click();
-        driver.findElementById("com.google.android.apps.messaging:id/recipient_text_view").sendKeys("anand");
+        driver.findElementByAccessibilityId("Start chat")
+              .click();
+        driver.findElementByAccessibilityId("Switch between entering text and numbers")
+              .click();
+        driver.findElementById("com.google.android.apps.messaging:id/recipient_text_view")
+              .sendKeys("anand");
         waitFor(5);
     }
 
@@ -58,30 +69,36 @@ public class Appium_Native_Android_MessagesTest {
     }
 
     private void log(String message) {
-        System.out.println(" ### " + new Date().toString() + " ### " + message);
+        System.out.println(" ### " + new Date() + " ### " + message);
     }
 
-    private AppiumDriver createAppiumDriver(String appiumPort, String udid) {
-        String APPIUM_SERVER_URL = "http://localhost:port/wd/hub";
+    private AppiumDriver createAppiumDriver(URL appiumServerUrl, String udid) {
+        log(String.format("Create AppiumDriver with appium server on: '%s', device udid - '%s'",
+                          appiumServerUrl,
+                          udid));
 
-        log(String.format("Create AppiumDriver for - %s, appiumPort - %s", udid, appiumPort));
-
-        try {
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
-            capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android");
-            capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-            capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "12");
-            capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE, "com.google.android.apps.messaging");
-            capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY, "com.google.android.apps.messaging.ui.ConversationListActivity");
-            capabilities.setCapability(MobileCapabilityType.NO_RESET, false);
-            capabilities.setCapability(MobileCapabilityType.FULL_RESET, false);
-            AppiumDriver<AndroidElement> appiumDriver = new AppiumDriver<>(new URL(APPIUM_SERVER_URL.replace("port", appiumPort)), capabilities);
-            log(String.format("Created AppiumDriver for - %s, appiumPort - %s", udid, appiumPort));
-            return appiumDriver;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Error in creating Appium Driver");
-        }
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,
+                                   "UiAutomator2");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME,
+                                   "Android");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME,
+                                   "Android");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION,
+                                   "11");
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE,
+                                   "com.google.android.apps.messaging");
+        capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,
+                                   "com.google.android.apps.messaging.ui.ConversationListActivity");
+        capabilities.setCapability(MobileCapabilityType.NO_RESET,
+                                   false);
+        capabilities.setCapability(MobileCapabilityType.FULL_RESET,
+                                   false);
+        AppiumDriver<AndroidElement> appiumDriver = new AppiumDriver<>(appiumServerUrl,
+                                                                       capabilities);
+        log(String.format("Created AppiumDriver for - %s, appiumPort - %s",
+                          udid,
+                          appiumServerUrl));
+        return appiumDriver;
     }
 }
