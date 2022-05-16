@@ -132,8 +132,8 @@ pwd
 # npm install -g opencv4nodejs
 echo "Installed node version"
 node -v
-echo "Install ios-deploy"
-npm install -g ios-deploy
+#echo "Install ios-deploy"
+#npm install -g ios-deploy
 echo "Install node modules - appium"
 npm install -g appium
 sleep 5
