@@ -2,10 +2,9 @@ package com.eot.sample.ios;
 
 import com.eot.sample.Hooks;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.ios.options.XCUITestOptions;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -28,7 +27,7 @@ public class Appium_Web_iOS_HelloWorldTest
 
     @AfterMethod
     public void afterMethod(ITestResult result) {
-        if (null != driver) {
+        if(null != driver) {
             System.out.println("Close the driver");
             driver.quit();
         }
@@ -40,7 +39,7 @@ public class Appium_Web_iOS_HelloWorldTest
         System.out.println("Start time: " + new Date());
         Thread.sleep(3000);
         driver.get("https://applitools.com/helloworld");
-        for (int stepNumber = 0; stepNumber < 5; stepNumber++) {
+        for(int stepNumber = 0; stepNumber < 5; stepNumber++) {
             driver.findElement(By.linkText("?diff1"))
                   .click();
             Thread.sleep(1000);
@@ -54,26 +53,23 @@ public class Appium_Web_iOS_HelloWorldTest
     }
 
 
-    private AppiumDriver<WebElement> createAppiumDriver() {
-        DesiredCapabilities dc = new DesiredCapabilities();
-        dc.setCapability(MobileCapabilityType.PLATFORM_NAME,
-                         "iOS");
-        dc.setCapability(MobileCapabilityType.AUTOMATION_NAME,
-                         "XCUITest");
-        dc.setCapability(MobileCapabilityType.PLATFORM_VERSION,
-                         PLATFORM_VERSION);
-        dc.setCapability(MobileCapabilityType.DEVICE_NAME,
-                         DEVICE_NAME);
-        dc.setCapability(MobileCapabilityType.UDID,
-                         UDID);
-        dc.setCapability(MobileCapabilityType.BROWSER_NAME,
-                         "safari");
-        dc.setCapability(MobileCapabilityType.APP,
-                         "io.appium.SafariLauncher");
+    private AppiumDriver createAppiumDriver() {
+        // Appium 1.x
+        // DesiredCapabilities dc = new DesiredCapabilities();
 
-        AppiumDriver<WebElement> driver = null;
-        driver = new AppiumDriver<>(getAppiumServerUrl(),
-                                    dc);
+        // Appium 2.x
+        XCUITestOptions dc = new XCUITestOptions();
+
+        dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS");
+        dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest");
+        dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, PLATFORM_VERSION);
+        dc.setCapability(MobileCapabilityType.DEVICE_NAME, DEVICE_NAME);
+        dc.setCapability(MobileCapabilityType.UDID, UDID);
+        dc.setCapability(MobileCapabilityType.BROWSER_NAME, "safari");
+        dc.setCapability(MobileCapabilityType.APP, "io.appium.SafariLauncher");
+
+        AppiumDriver driver = null;
+        driver = new AppiumDriver(getAppiumServerUrl(), dc);
         return driver;
     }
 }

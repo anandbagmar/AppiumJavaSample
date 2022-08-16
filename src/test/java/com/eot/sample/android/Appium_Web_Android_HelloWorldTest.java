@@ -3,18 +3,17 @@ package com.eot.sample.android;
 import com.eot.sample.Hooks;
 import com.eot.utils.DriverUtils;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.By;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
+import java.time.Duration;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 public class Appium_Web_Android_HelloWorldTest
         extends Hooks {
@@ -28,7 +27,7 @@ public class Appium_Web_Android_HelloWorldTest
 
     @AfterMethod
     public void afterMethod(ITestResult result) {
-        if (null != driver) {
+        if(null != driver) {
             System.out.println("Close the driver");
             driver.quit();
         }
@@ -39,7 +38,7 @@ public class Appium_Web_Android_HelloWorldTest
                                 InterruptedException {
         System.out.println("Start time: " + new Date());
         driver.get("https://applitools.com/helloworld");
-        for (int stepNumber = 0; stepNumber < 5; stepNumber++) {
+        for(int stepNumber = 0; stepNumber < 5; stepNumber++) {
             driver.findElement(By.linkText("?diff1"))
                   .click();
             Thread.sleep(1000);
@@ -51,28 +50,25 @@ public class Appium_Web_Android_HelloWorldTest
     }
 
     private AppiumDriver setupMobileWeb() {
-        DesiredCapabilities dc = new DesiredCapabilities(new ChromeOptions());
-        dc.setCapability(MobileCapabilityType.PLATFORM_NAME,
-                         "Android");
-        dc.setCapability(MobileCapabilityType.PLATFORM_VERSION,
-                         "11");
-        dc.setCapability(MobileCapabilityType.DEVICE_NAME,
-                         "Android");
-        dc.setCapability(MobileCapabilityType.AUTOMATION_NAME,
-                         "UiAutomator2");
-        dc.setCapability(MobileCapabilityType.BROWSER_NAME,
-                         "Chrome");
-        dc.setCapability("chromedriverExecutable",
-                         System.getProperty("webdriver.chrome.driver"));
+        // Appium 1.x
+        // DesiredCapabilities capabilities = new DesiredCapabilities();
+
+        // Appium 2.x
+        UiAutomator2Options capabilities = new UiAutomator2Options();
+
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "11");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android");
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
+        capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
+        capabilities.setCapability("chromedriverExecutable", System.getProperty("webdriver.chrome.driver"));
 
         // Open browser.
         AppiumDriver driver = null;
-        driver = new AppiumDriver(getAppiumServerUrl(),
-                                  dc);
+        driver = new AppiumDriver(getAppiumServerUrl(), capabilities);
         driver.manage()
               .timeouts()
-              .implicitlyWait(60,
-                              TimeUnit.SECONDS);
+              .implicitlyWait(Duration.ofSeconds(60));
         return driver;
     }
 }

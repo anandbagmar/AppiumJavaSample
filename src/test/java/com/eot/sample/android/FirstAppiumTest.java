@@ -1,9 +1,12 @@
 package com.eot.sample.android;
 
 import com.eot.sample.Hooks;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
+import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.Test;
 
@@ -15,7 +18,13 @@ public class FirstAppiumTest
     public void runMessagesTest() {
         // 1. Create a AppiumDriver
         // 1.1 Set the capabilities of the driver
-        DesiredCapabilities capabilities = new DesiredCapabilities();
+
+        // Appium 1.x
+        // DesiredCapabilities capabilities = new DesiredCapabilities();
+
+        // Appium 2.x
+        UiAutomator2Options capabilities = new UiAutomator2Options();
+
         capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,
                                    "UiAutomator2");
         capabilities.setCapability(MobileCapabilityType.DEVICE_NAME,
@@ -23,7 +32,7 @@ public class FirstAppiumTest
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME,
                                    "Android");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION,
-                                   "11");
+                                   "12");
         capabilities.setCapability(AndroidMobileCapabilityType.APP_PACKAGE,
                                    "com.google.android.apps.messaging");
         capabilities.setCapability(AndroidMobileCapabilityType.APP_ACTIVITY,
@@ -32,26 +41,26 @@ public class FirstAppiumTest
                                    false);
         capabilities.setCapability(MobileCapabilityType.FULL_RESET,
                                    false);
-        driver = new AppiumDriver<>(getAppiumServerUrl(),
+        driver = new AppiumDriver(getAppiumServerUrl(),
                                     capabilities);
         System.out.println("Created AppiumDriver");
 
         // 2. Orchestrate the test scenario
         try {
-            driver.findElementById("com.google.android.apps.messaging:id/conversation_list_google_tos_popup_positive_button")
+            driver.findElement(By.id("com.google.android.apps.messaging:id/conversation_list_google_tos_popup_positive_button"))
                   .click();
-            driver.findElementById("android:id/button2")
+            driver.findElement(By.id("android:id/button2"))
                   .click();
-            driver.findElementById("android:id/button1")
+            driver.findElement(By.id("android:id/button1"))
                   .click();
         } catch (Exception e) {
             System.out.println("Agree button not seen");
         }
-        driver.findElementByAccessibilityId("Start chat")
+        driver.findElement(AppiumBy.accessibilityId("Start chat"))
               .click();
-        driver.findElementByAccessibilityId("Switch between entering text and numbers")
+        driver.findElement(AppiumBy.accessibilityId("Switch between entering text and numbers"))
               .click();
-        driver.findElementById("com.google.android.apps.messaging:id/recipient_text_view")
+        driver.findElement(AppiumBy.accessibilityId("com.google.android.apps.messaging:id/recipient_text_view"))
               .sendKeys("anand");
         waitFor(5);
         if (null != driver) {

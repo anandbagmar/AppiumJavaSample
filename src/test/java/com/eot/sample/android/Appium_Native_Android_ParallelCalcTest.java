@@ -2,8 +2,7 @@ package com.eot.sample.android;
 
 import com.eot.sample.Hooks;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
-import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -18,14 +17,11 @@ import java.util.HashMap;
 public class Appium_Native_Android_ParallelCalcTest
         extends Hooks {
 
-    private final HashMap<String, AppiumDriver<MobileElement>> drivers = new HashMap<>();
+    private final HashMap<String, AppiumDriver> drivers = new HashMap<>();
 
     @DataProvider(name = "device-provider", parallel = true)
     public Object[][] provide() {
-        return new Object[][]{
-                {"emulator-5554", 2, 5},
-                {"emulator-5556", 3, 6}
-        };
+        return new Object[][]{{"emulator-5554", 2, 5}, {"emulator-5556", 3, 6}};
     }
 
     @BeforeSuite
@@ -38,14 +34,10 @@ public class Appium_Native_Android_ParallelCalcTest
         ITestResult result = ((ITestResult) testArgs[1]);
         String udid = (String) testArgs[2];
 
-        log(String.format("Create AppiumDriver for - %s:%s",
-                          udid));
-        AppiumDriver driver = createAppiumDriver(getAppiumServerUrl(),
-                                                 udid);
-        drivers.put(udid,
-                    driver);
-        log(String.format("Created AppiumDriver for - %s:%s",
-                          udid));
+        log(String.format("Create AppiumDriver for - %s:%s", udid));
+        AppiumDriver driver = createAppiumDriver(getAppiumServerUrl(), udid);
+        drivers.put(udid, driver);
+        log(String.format("Created AppiumDriver for - %s:%s", udid));
     }
 
     @AfterMethod
@@ -59,14 +51,12 @@ public class Appium_Native_Android_ParallelCalcTest
         AppiumDriver driver = drivers.get(udid);
 
         try {
-            if (null != driver) {
+            if(null != driver) {
                 driver.quit();
             }
 
-            log(String.format("Visual Validation Results for - %s:%s",
-                              udid,
-                              systemPort));
-        } catch (Exception e) {
+            log(String.format("Visual Validation Results for - %s:%s", udid, systemPort));
+        } catch(Exception e) {
             log("Exception - " + e.getMessage());
             e.printStackTrace();
         } finally {
@@ -75,10 +65,8 @@ public class Appium_Native_Android_ParallelCalcTest
 
     @Test(dataProvider = "device-provider", threadPoolSize = 2)
     public void runTest(Method method, ITestResult testResult, String udid, int num1, int num2) {
-        log(String.format("Runnng test on %s:%s, appiumPort - ",
-                          udid));
-        log(String.format("drivers.size()=%d",
-                          drivers.size()));
+        log(String.format("Runnng test on %s:%s, appiumPort - ", udid));
+        log(String.format("drivers.size()=%d", drivers.size()));
         AppiumDriver driver = drivers.get(udid);
         try {
             driver.findElement(By.id("digit_" + num1))
@@ -87,10 +75,10 @@ public class Appium_Native_Android_ParallelCalcTest
                   .click();
             driver.findElement(By.id("digit_" + num2))
                   .click();
-        } catch (Exception e) {
+        } catch(Exception e) {
             log(e.toString());
         } finally {
-            if (null != driver) {
+            if(null != driver) {
                 driver.quit();
             }
         }
@@ -101,24 +89,20 @@ public class Appium_Native_Android_ParallelCalcTest
     }
 
     private AppiumDriver createAppiumDriver(URL appiumServerUrl, String udid) {
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME,
-                                   "UiAutomator2");
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME,
-                                   "Android Emulator");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME,
-                                   "Android");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION,
-                                   "11");
-        capabilities.setCapability(MobileCapabilityType.UDID,
-                                   udid);
-        capabilities.setCapability("app",
-                                   "src/test/resources/sampleApps/AndroidCalculator.apk");
-        capabilities.setCapability(MobileCapabilityType.NO_RESET,
-                                   false);
-        capabilities.setCapability(MobileCapabilityType.FULL_RESET,
-                                   false);
-        return new AppiumDriver<AndroidElement>(appiumServerUrl,
-                                                capabilities);
+        // Appium 1.x
+        // DesiredCapabilities capabilities = new DesiredCapabilities();
+
+        // Appium 2.x
+        UiAutomator2Options capabilities = new UiAutomator2Options();
+
+        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
+        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android Emulator");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "11");
+        capabilities.setCapability(MobileCapabilityType.UDID, udid);
+        capabilities.setCapability("app", "src/test/resources/sampleApps/AndroidCalculator.apk");
+        capabilities.setCapability(MobileCapabilityType.NO_RESET, false);
+        capabilities.setCapability(MobileCapabilityType.FULL_RESET, false);
+        return new AppiumDriver(appiumServerUrl, capabilities);
     }
 }

@@ -16,7 +16,14 @@ public class Hooks {
         AppiumServiceBuilder serviceBuilder = new AppiumServiceBuilder();
         // Use any port, in case the default 4723 is already taken (maybe by another Appium server)
         serviceBuilder.usingAnyFreePort();
+
+        // Appium 1.x
+        // localAppiumServer = AppiumDriverLocalService.buildService(serviceBuilder);
+        //                                            .withBasePath("/wd/hub/");
+
+        // Appium 2.x
         localAppiumServer = AppiumDriverLocalService.buildService(serviceBuilder);
+
         localAppiumServer.start();
         System.out.println(String.format("Appium server started on url: '%s'",
                                          localAppiumServer.getUrl()
@@ -35,6 +42,7 @@ public class Hooks {
     }
 
     public URL getAppiumServerUrl() {
+        System.out.println("Appium server url: " + localAppiumServer.getUrl());
         return localAppiumServer.getUrl();
     }
 }

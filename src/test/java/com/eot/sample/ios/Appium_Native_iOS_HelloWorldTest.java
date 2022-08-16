@@ -1,10 +1,11 @@
 package com.eot.sample.ios;
 
 import com.eot.sample.Hooks;
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.ios.options.XCUITestOptions;
 import io.appium.java_client.remote.MobileCapabilityType;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.By;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -26,7 +27,7 @@ public class Appium_Native_iOS_HelloWorldTest
 
     @AfterMethod
     public void afterMethod(ITestResult result) {
-        if (null != driver) {
+        if(null != driver) {
             System.out.println("Close the driver");
             driver.quit();
         }
@@ -34,34 +35,32 @@ public class Appium_Native_iOS_HelloWorldTest
 
     @Test
     public void runIOSNativeAppTest() {
-        driver.findElementByAccessibilityId("Make the number below random.")
+        driver.findElement(AppiumBy.accessibilityId("Make the number below random."))
               .click();
-        driver.findElementByAccessibilityId("MakeRandomNumberCheckbox")
+        driver.findElement(AppiumBy.accessibilityId("MakeRandomNumberCheckbox"))
               .click();
-        driver.findElementByAccessibilityId("SimulateDiffsCheckbox")
+        driver.findElement(AppiumBy.accessibilityId("SimulateDiffsCheckbox"))
               .click();
-        driver.findElementByXPath("//XCUIElementTypeStaticText[@name=\"Click me!\"]")
+        driver.findElement(By.xpath("//XCUIElementTypeStaticText[@name=\"Click me!\"]"))
               .click();
     }
 
-    private AppiumDriver<WebElement> createAppiumDriver() {
-        DesiredCapabilities dc = new DesiredCapabilities();
-        dc.setCapability(MobileCapabilityType.PLATFORM_NAME,
-                         "iOS");
-        dc.setCapability(MobileCapabilityType.AUTOMATION_NAME,
-                         "XCUITest");
-        dc.setCapability(MobileCapabilityType.PLATFORM_VERSION,
-                         PLATFORM_VERSION);
-        dc.setCapability(MobileCapabilityType.DEVICE_NAME,
-                         DEVICE_NAME);
-        dc.setCapability(MobileCapabilityType.UDID,
-                         UDID);
-        dc.setCapability("app",
-                         System.getProperty("user.dir") + "/src/test/resources/sampleApps/eyes-ios-hello-world.zip");
+    private AppiumDriver createAppiumDriver() {
+        // Appium 1.x
+        // DesiredCapabilities dc = new DesiredCapabilities();
 
-        AppiumDriver<WebElement> driver = null;
-        driver = new AppiumDriver<>(getAppiumServerUrl(),
-                                    dc);
+        // Appium 2.x
+        XCUITestOptions dc = new XCUITestOptions();
+
+        dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS");
+        dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest");
+        dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, PLATFORM_VERSION);
+        dc.setCapability(MobileCapabilityType.DEVICE_NAME, DEVICE_NAME);
+        dc.setCapability(MobileCapabilityType.UDID, UDID);
+        dc.setCapability("app", System.getProperty("user.dir") + "/src/test/resources/sampleApps/eyes-ios-hello-world.zip");
+
+        AppiumDriver driver = null;
+        driver = new AppiumDriver(getAppiumServerUrl(), dc);
         return driver;
     }
 }
