@@ -93,7 +93,7 @@ else
 fi
 
 echo "Setup android sdk"
-cd $ANDROID_HOME/cmdline-tools/bin
+cd $ANDROID_HOME/cmdline-tools/latest/bin
 pwd
 
 BUILD_TOOLS_VERSION=32.0.0
