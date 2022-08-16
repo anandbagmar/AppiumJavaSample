@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
 
-public class Appium_Native_iOS_HelloWorldTest
+public class AppiumNativeiOSHelloWorldTest
         extends Hooks {
     private static final String UDID = "F2D71DA6-ABD3-4311-A694-349FD64A5E7D";
     private static final String DEVICE_NAME = "iPhone 12 Pro Max";

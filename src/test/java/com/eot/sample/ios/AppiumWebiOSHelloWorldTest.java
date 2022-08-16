@@ -1,9 +1,8 @@
-package com.eot.sample.android;
+package com.eot.sample.ios;
 
 import com.eot.sample.Hooks;
-import com.eot.utils.DriverUtils;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.options.UiAutomator2Options;
+import io.appium.java_client.ios.options.XCUITestOptions;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.By;
 import org.testng.ITestResult;
@@ -12,17 +11,18 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
-import java.time.Duration;
 import java.util.Date;
 
-public class Appium_Web_Android_HelloWorldTest
+public class AppiumWebiOSHelloWorldTest
         extends Hooks {
+    private static final String UDID = "F2D71DA6-ABD3-4311-A694-349FD64A5E7D";
+    private static final String DEVICE_NAME = "iPhone 12 Pro Max";
+    private static final String PLATFORM_VERSION = "14.5";
     private AppiumDriver driver;
 
     @BeforeMethod
     public void beforeMethod(Method method) {
-        DriverUtils.setChromeDriverForConnectedDevice();
-        driver = setupMobileWeb();
+        driver = createAppiumDriver();
     }
 
     @AfterMethod
@@ -33,10 +33,11 @@ public class Appium_Web_Android_HelloWorldTest
         }
     }
 
-    @Test()
-    public void appiumWebTest() throws
+    @Test
+    public void runIOSWebTest() throws
                                 InterruptedException {
         System.out.println("Start time: " + new Date());
+        Thread.sleep(3000);
         driver.get("https://applitools.com/helloworld");
         for(int stepNumber = 0; stepNumber < 5; stepNumber++) {
             driver.findElement(By.linkText("?diff1"))
@@ -46,29 +47,29 @@ public class Appium_Web_Android_HelloWorldTest
 
         driver.findElement(By.tagName("button"))
               .click();
+        driver.quit();
+
         System.out.println("End time: " + new Date());
     }
 
-    private AppiumDriver setupMobileWeb() {
+
+    private AppiumDriver createAppiumDriver() {
         // Appium 1.x
-        // DesiredCapabilities capabilities = new DesiredCapabilities();
+        // DesiredCapabilities dc = new DesiredCapabilities();
 
         // Appium 2.x
-        UiAutomator2Options capabilities = new UiAutomator2Options();
+        XCUITestOptions dc = new XCUITestOptions();
 
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
-        capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, "11");
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, "Android");
-        capabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
-        capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
-        capabilities.setCapability("chromedriverExecutable", System.getProperty("webdriver.chrome.driver"));
+        dc.setCapability(MobileCapabilityType.PLATFORM_NAME, "iOS");
+        dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest");
+        dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, PLATFORM_VERSION);
+        dc.setCapability(MobileCapabilityType.DEVICE_NAME, DEVICE_NAME);
+        dc.setCapability(MobileCapabilityType.UDID, UDID);
+        dc.setCapability(MobileCapabilityType.BROWSER_NAME, "safari");
+        dc.setCapability(MobileCapabilityType.APP, "io.appium.SafariLauncher");
 
-        // Open browser.
         AppiumDriver driver = null;
-        driver = new AppiumDriver(getAppiumServerUrl(), capabilities);
-        driver.manage()
-              .timeouts()
-              .implicitlyWait(Duration.ofSeconds(60));
+        driver = new AppiumDriver(getAppiumServerUrl(), dc);
         return driver;
     }
 }

@@ -7,7 +7,6 @@ import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.remote.AndroidMobileCapabilityType;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.By;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -17,7 +16,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Date;
 
-public class Appium_Native_Android_MessagesTest
+public class AppiumNativeAndroidMessagesTest
         extends Hooks {
 
     private AppiumDriver driver;

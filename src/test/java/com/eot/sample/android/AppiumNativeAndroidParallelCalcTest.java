@@ -5,7 +5,6 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.By;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 
@@ -14,7 +13,7 @@ import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Appium_Native_Android_ParallelCalcTest
+public class AppiumNativeAndroidParallelCalcTest
         extends Hooks {
 
     private final HashMap<String, AppiumDriver> drivers = new HashMap<>();
