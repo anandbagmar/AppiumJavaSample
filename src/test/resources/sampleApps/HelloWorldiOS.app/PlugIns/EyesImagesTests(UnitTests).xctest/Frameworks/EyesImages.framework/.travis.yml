@@ -1,0 +1,20 @@
+language: objective-c
+osx_image: xcode10
+xcode_project: ApplitoolsEyes/Applitools.xcodeproj # path to xcodeproj folder
+xcode_scheme: IntegrationTests
+xcode_sdk: iphonesimulator12.0
+sudo: enabled
+notifications:
+  email:
+    - anton.chuev@applitools.com
+script:
+  - xcodebuild build -project ApplitoolsEyes/Applitools.xcodeproj -scheme IntegrationTests -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=12.0' test
+  - xcodebuild build -project ApplitoolsEyes/Applitools.xcodeproj -scheme UnitTests -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6,OS=12.0' test
+
+after_success:
+- sh ApplitoolsEyes/Scripts/set_tags.sh
+- if [ "$TRAVIS_BRANCH" == "master" ] && [ -n $TRAVIS_TAG ] && [ "$APPLITOOLS_AUTO_DEPLOY" == "true" ]; then
+    sh ApplitoolsEyes/Scripts/build_sdk.sh;
+    sh ApplitoolsEyes/Scripts/update_version_on_cocoapods.sh;
+    sh ApplitoolsEyes/Scripts/update_carthage_integration.sh;
+  fi;

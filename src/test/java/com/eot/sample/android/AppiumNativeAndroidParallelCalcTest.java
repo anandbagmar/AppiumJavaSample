@@ -1,6 +1,5 @@
 package com.eot.sample.android;
 
-import com.eot.sample.Hooks;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -13,8 +12,9 @@ import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 
-public class AppiumNativeAndroidParallelCalcTest
-        extends Hooks {
+import static com.eot.sample.Hooks.*;
+
+public class AppiumNativeAndroidParallelCalcTest {
 
     private final HashMap<String, AppiumDriver> drivers = new HashMap<>();
 
@@ -24,14 +24,20 @@ public class AppiumNativeAndroidParallelCalcTest
     }
 
     @BeforeSuite
-    public void setUp() {
+    public void beforeAll() {
+        startAppiumServer();
+    }
+
+    @AfterSuite
+    public void afterAll() {
+        stopAppiumServer();
     }
 
     @BeforeMethod
     public void beforeMethod(Object[] testArgs) {
         String methodName = ((Method) testArgs[0]).getName();
-        ITestResult result = ((ITestResult) testArgs[1]);
         String udid = (String) testArgs[2];
+        log(String.format("Running test '%s' on '%s'", methodName, udid));
 
         log(String.format("Create AppiumDriver for - %s:%s", udid));
         AppiumDriver driver = createAppiumDriver(getAppiumServerUrl(), udid);
@@ -44,18 +50,19 @@ public class AppiumNativeAndroidParallelCalcTest
         log(testArgs.toString());
         String methodName = ((Method) testArgs[0]).getName();
         ITestResult result = ((ITestResult) testArgs[1]);
+        log(String.format("Test '%s' result: '%s'", methodName, result.toString()));
         String udid = (String) testArgs[2];
         Integer systemPort = (Integer) testArgs[3];
 
         AppiumDriver driver = drivers.get(udid);
 
         try {
-            if(null != driver) {
+            if (null != driver) {
                 driver.quit();
             }
 
             log(String.format("Visual Validation Results for - %s:%s", udid, systemPort));
-        } catch(Exception e) {
+        } catch (Exception e) {
             log("Exception - " + e.getMessage());
             e.printStackTrace();
         } finally {
@@ -69,15 +76,15 @@ public class AppiumNativeAndroidParallelCalcTest
         AppiumDriver driver = drivers.get(udid);
         try {
             driver.findElement(By.id("digit_" + num1))
-                  .click();
+                    .click();
             driver.findElement(By.id("op_add"))
-                  .click();
+                    .click();
             driver.findElement(By.id("digit_" + num2))
-                  .click();
-        } catch(Exception e) {
+                    .click();
+        } catch (Exception e) {
             log(e.toString());
         } finally {
-            if(null != driver) {
+            if (null != driver) {
                 driver.quit();
             }
         }

@@ -1,23 +1,31 @@
 package com.eot.sample.android;
 
-import com.eot.sample.Hooks;
 import com.eot.utils.DriverUtils;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.By;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.Date;
 
-public class AppiumWebAndroidHelloWorldTest
-        extends Hooks {
+import static com.eot.sample.Hooks.*;
+
+public class AppiumWebAndroidHelloWorldTest {
     private AppiumDriver driver;
+
+    @BeforeSuite
+    public void beforeAll() {
+        startAppiumServer();
+    }
+
+    @AfterSuite
+    public void afterAll() {
+        stopAppiumServer();
+    }
 
     @BeforeMethod
     public void beforeMethod(Method method) {
@@ -27,7 +35,7 @@ public class AppiumWebAndroidHelloWorldTest
 
     @AfterMethod
     public void afterMethod(ITestResult result) {
-        if(null != driver) {
+        if (null != driver) {
             System.out.println("Close the driver");
             driver.quit();
         }
@@ -35,17 +43,17 @@ public class AppiumWebAndroidHelloWorldTest
 
     @Test()
     public void appiumWebTest() throws
-                                InterruptedException {
+            InterruptedException {
         System.out.println("Start time: " + new Date());
         driver.get("https://applitools.com/helloworld");
-        for(int stepNumber = 0; stepNumber < 5; stepNumber++) {
+        for (int stepNumber = 0; stepNumber < 5; stepNumber++) {
             driver.findElement(By.linkText("?diff1"))
-                  .click();
+                    .click();
             Thread.sleep(1000);
         }
 
         driver.findElement(By.tagName("button"))
-              .click();
+                .click();
         System.out.println("End time: " + new Date());
     }
 
@@ -67,8 +75,8 @@ public class AppiumWebAndroidHelloWorldTest
         AppiumDriver driver = null;
         driver = new AppiumDriver(getAppiumServerUrl(), capabilities);
         driver.manage()
-              .timeouts()
-              .implicitlyWait(Duration.ofSeconds(60));
+                .timeouts()
+                .implicitlyWait(Duration.ofSeconds(60));
         return driver;
     }
 }

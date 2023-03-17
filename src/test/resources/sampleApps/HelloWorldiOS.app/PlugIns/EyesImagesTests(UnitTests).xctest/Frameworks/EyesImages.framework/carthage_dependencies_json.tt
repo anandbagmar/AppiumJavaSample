@@ -1,0 +1,3 @@
+{
+    "<%= options['version'] %>" : "https://applitools.bintray.com/iOS/<%= name %>/<%= options['version'] %>/<%= name %>-<%= options['version'] %>.zip"
+}

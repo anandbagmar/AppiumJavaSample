@@ -1,0 +1,19 @@
+Pod::Spec.new do |s|
+  s.name              = '<%= name %>'
+  s.version           = '<%= options['version'] %>'
+  s.summary           = '<%= name %> SDK for automatic visual validation in XCUI.'
+  s.homepage          = 'https://applitools.com'
+
+  s.author            = 'Applitools Team'
+  s.license           = { :type => 'Copyright', :file => 'LICENSE' }
+
+  s.source            = { :http => 'https://applitools.bintray.com/iOS/<%= name %>/<%= options['version'] %>/<%= name %>-<%= options['version'] %>.zip' }
+
+  s.platform          = :ios
+  s.requires_arc = true
+  s.ios.deployment_target = '9.0'
+
+  s.vendored_frameworks = '<%= name %>/<%= name %>.framework'
+  s.public_header_files = '<%= name %>/<%= name %>.framework/Headers/*.h'
+  s.source_files        = '<%= name %>/<%= name %>.framework/Headers/*.{h}'
+end
