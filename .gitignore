@@ -3,3 +3,5 @@
 target/
 *.apk
 temp
+node_modules
+**/*/.DS_STORE

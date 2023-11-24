@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
 import static com.eot.sample.Hooks.*;
 
 public class AppiumNativeiOSHelloWorldTest {
-    private static final String UDID = "D980DC00-36CC-4836-8D05-C246DC5179A1";
+    private static final String UDID = "7B0FA5D8-1926-4461-A313-243BCE78A6CE";
     private static final String DEVICE_NAME = "iPhone 14 Pro";
     private static final String PLATFORM_VERSION = "16.2";
     private AppiumDriver driver;
@@ -64,7 +64,7 @@ public class AppiumNativeiOSHelloWorldTest {
         dc.setCapability(MobileCapabilityType.AUTOMATION_NAME, "XCUITest");
         dc.setCapability(MobileCapabilityType.PLATFORM_VERSION, PLATFORM_VERSION);
         dc.setCapability(MobileCapabilityType.DEVICE_NAME, DEVICE_NAME);
-//        dc.setCapability(MobileCapabilityType.UDID, UDID);
+        dc.setCapability(MobileCapabilityType.UDID, UDID);
         dc.setCapability("app", System.getProperty("user.dir") + "/src/test/resources/sampleApps" +
                                         "/HelloWorldiOS.app");
 //        dc.setCapability("app", System.getProperty("user.dir") + "/src/test/resources/sampleApps/eyes-ios-hello-world.zip");
