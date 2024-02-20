@@ -7,7 +7,7 @@ Sample project for running tests using Java/TestNG/Appium
 
 * Set `ANDROID_HOME` as an environment variable - pointing to the directory where Android SDK should be setup
 
-* Execute the following scripts to setup your Mac [setup_mac.sh](setup_mac.sh) or Ubuntu [setup_linux.sh](setup_linux.sh) machine automatically 
+* Execute the following scripts to setup your Mac [setupAndroidSDK.sh](setupAndroidSDK.sh) or Ubuntu [setup_linux.sh](setup_linux.sh) machine automatically 
 > The above script will install all dependencies required for implementing / running tests on Android devices. To do the setup for iOS devices, run `appium-doctor` and see the list of dependencies that are missing, and install the same.
 
 > You may be prompted for password or confirmations along the way 
